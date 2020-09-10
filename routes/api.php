@@ -24,3 +24,4 @@ Route::get('/siswa', 'KelasController@show');
 Route::get('/siswa/{id}', 'KelasController@detail');
 Route::post('/siswa', 'SiswaController@store');
 Route::put('/siswa/{id}', 'SiswaController@update');
+Route::delete('/siswa/{id}', 'SiswaController@destroy');
