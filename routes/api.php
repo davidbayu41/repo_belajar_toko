@@ -17,12 +17,23 @@ Route::post('/login', 'UserController@login');
 
 Route::group(['middleware' => ['jwt.verify']], function ()
 {
-	Route::get('/kelas', 'KelasController@show');
-	Route::post('/kelas', 'KelasController@store');
+	Route::group(['middleware' => ['api.superadmin']], function ()
+	{
+		Route::delete('/siswa/{id}', 'SiswaController@destroy');
+	}};	
 
+	Route::group(['middleware' => ['api.admin']], function ()
+	{	
+		Route::post('/kelas', 'KelasController@store');
+
+		Route::post('/siswa', 'SiswaController@store');
+		Route::put('/siswa/{id}', 'SiswaController@update');
+	}};	
+
+	Route::get('/kelas', 'KelasController@show');
+	
 	Route::get('/siswa', 'KelasController@show');
 	Route::get('/siswa/{id}', 'KelasController@detail');
-	Route::post('/siswa', 'SiswaController@store');
-	Route::put('/siswa/{id}', 'SiswaController@update');
-	Route::delete('/siswa/{id}', 'SiswaController@destroy');
+	
+	
 });
